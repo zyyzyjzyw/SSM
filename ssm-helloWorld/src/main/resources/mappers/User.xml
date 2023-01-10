@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.java.dao.UserMapper">
+    <!--int insertUser();-->
+    <insert id="insertUser">
+        insert into t_user values(null,'zyy','123456',23,'男','12345@qq.com')
+    </insert>
+    <insert id="insertUserGenera" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user values(null,#{username},#{password},#{age},#{gender},#{email})
+    </insert>
+    <update id="updateUser">
+        update t_user set gender='女' where id=2
+    </update>
+    <delete id="deleteUser">
+        delete from t_user where id=1
+    </delete>
+    <select id="getUserById" resultType="com.tedu.java.pojo.User">
+        select * from t_user where id=2
+    </select>
+    <!--
+    1.查询的标签select必须设置属性resultType或resultMap，用于设置实体类和数据库表的映射关系.
+    2.resultType：自动映射，用于属性名和表中字段名一致的情况.
+    3.resultMap：自定义映射，用于一对多或多对一或字段名和属性名不一致的情况.-->
+    <select id="getUserList" resultType="com.tedu.java.pojo.User">
+        select * from t_user
+    </select>
+    <select id="getUser" resultType="com.tedu.java.pojo.User">
+        select * from t_user where id=#{id}
+    </select>
+    <select id="getCount" resultType="_integer">
+        select count(id) from t_user;
+    </select>
+    <select id="getUserToMap" resultType="java.util.Map">
+        select * from t_user where id=#{id}
+    </select>
+    <select id="getAllUserToMap" resultType="java.util.Map">
+        select * from t_user
+    </select>
+    <select id="getUserDim" resultType="com.tedu.java.pojo.User">
+        select * from t_user where username like "%"#{username}"%"
+    </select>
+</mapper>
